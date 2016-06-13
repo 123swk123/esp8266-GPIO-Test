@@ -114,8 +114,11 @@ void ICACHE_FLASH_ATTR Sys_Init_Complete(void)
 //	os_timer_arm_us(&myTimer, 125, true);
 
 	hw_timer_init(NMI_SOURCE, 1);
+	//RTC_REG_WRITE(FRC1_CTRL_ADDRESS, 0xc2);
 	hw_timer_set_func(vTimer_cbk);
 	hw_timer_arm(125);
+
+	os_printf("FRC1_CTRL_ADDRESS: %08lX\r\n", RTC_REG_READ(FRC1_CTRL_ADDRESS));
 }
 
 LOCAL void uart0_rx_intr_handler(void *para)
@@ -154,7 +157,7 @@ void ICACHE_FLASH_ATTR _HW_Init(void)
 {
   system_set_os_print(true);
 
-  system_update_cpu_freq(SYS_CPU_80MHZ);
+  system_update_cpu_freq(SYS_CPU_160MHZ);
 
   uart_init(BIT_RATE_921600, BIT_RATE_921600);
 
